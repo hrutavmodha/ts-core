@@ -1,2 +1,3 @@
 depot_tools
-chromium/
+_bad_scm/
+.cipd/

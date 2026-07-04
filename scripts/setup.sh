@@ -41,18 +41,12 @@ fi
 # 3. Add depot_tools to PATH for this session
 export PATH="${DEPOT_TOOLS_DIR}:${PATH}"
 
-# 4. Prepare chromium build directory
-CHROMIUM_DIR="${WORKSPACE_DIR}/chromium"
-if [ ! -d "${CHROMIUM_DIR}" ]; then
-    echo "Creating 'chromium' workspace directory..."
-    mkdir -p "${CHROMIUM_DIR}"
-fi
-
-cd "${CHROMIUM_DIR}"
+# 4. Prepare chromium build directory (using workspace root directly)
+cd "${WORKSPACE_DIR}"
 
 # 5. Initialize gclient configuration
 if [ ! -f ".gclient" ]; then
-    echo "Initializing gclient configuration..."
+    echo "Initializing gclient configuration at workspace root..."
     gclient config --unmanaged https://chromium.googlesource.com/chromium/src.git
 else
     echo ".gclient configuration already exists. Skipping initialization."
@@ -63,8 +57,8 @@ echo "Setup completed successfully!"
 echo "Next step: Run the following commands to start the Chromium source fetch:"
 echo ""
 echo "  export PATH=\"\$(pwd)/depot_tools:\$PATH\""
-echo "  cd chromium"
 echo "  fetch --no-history chromium"
 echo ""
 echo "NOTE: The fetch command will download ~30GB+ of data and will take time."
 echo "========================================================================="
+
